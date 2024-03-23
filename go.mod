@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/matias-inc/goenv v1.0.1
+	github.com/sethvargo/go-envconfig v1.0.1
 	gorm.io/driver/sqlite v1.5.5
 	gorm.io/gorm v1.25.8
 )

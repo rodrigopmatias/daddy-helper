@@ -38,7 +38,7 @@ func dispatchMessage(metric Metric) error {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", fmt.Sprintf("%s/metric", config.MetricAPI), bytes.NewReader(body))
+	req, err := http.NewRequest("POST", config.MetricAPI, bytes.NewReader(body))
 	if err != nil {
 		return err
 	}

@@ -1,30 +1,32 @@
 package helpers
 
 import (
-	"github.com/matias-inc/goenv"
+	"context"
+
+	"github.com/sethvargo/go-envconfig"
 )
 
 type _Config struct {
-	TerminalId              string
-	MetricAPI               string
-	DispatchIntervalSeconds int64
-	CollectIntervalSeconds  int64
-	DispatchChunkSize       int64
-	BusSize                 int64
+	TerminalId              string `env:"TERMINAL_ID, default=69909214-96e6-fake-b1d0-b5b8029a0faf"`
+	MetricAPI               string `env:"METRIC_API, default=http://localhost:3000/v1"`
+	DispatchIntervalSeconds int64  `env:"DISPATCH_INTERVAL_SECONDS, default=300"`
+	CollectIntervalSeconds  int64  `env:"COLLECT_INTERVAL_SECONDS, default=60"`
+	DispatchChunkSize       int64  `env:"DISPATCH_CHUNK_SIZE, default=20"`
+	BusSize                 int64  `env:"BUS_SIZE, default=5"`
 }
 
 var config *_Config = nil
 
 func GetConfig() *_Config {
 	if config == nil {
-		config = &_Config{
-			TerminalId:              goenv.Config("TERMINAL_ID", "69909214-96e6-fake-b1d0-b5b8029a0faf", goenv.CastString),
-			MetricAPI:               goenv.Config("METRIC_API", "http://localhost:3000/v1", goenv.CastString),
-			DispatchIntervalSeconds: goenv.Config("DISPATCH_INTERVAL_SECONDS", "300", goenv.CastInt64),
-			CollectIntervalSeconds:  goenv.Config("COLLECT_INTERVAL_SECONDS", "60", goenv.CastInt64),
-			DispatchChunkSize:       goenv.Config("DISPATCH_CHUNK_SIZE", "20", goenv.CastInt64),
-			BusSize:                 goenv.Config("BUS_SIZE", "5", goenv.CastInt64),
+		var c _Config
+		ctx := context.Background()
+
+		if err := envconfig.Process(ctx, &c); err != nil {
+			panic(err)
 		}
+
+		config = &c
 	}
 
 	return config

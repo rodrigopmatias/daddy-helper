@@ -10,7 +10,12 @@
             "request": "launch",
             "mode": "auto",
             "program": "cmd/service/main.go",
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "env": {
+              "METRIC_API": "http://localhost:8000/v1/metrics",
+              "TERMINAL_ID": "9cb3d25b-c453-4ecd-81b1-4736f112ccc9",
+              "DISPATCH_CHUNK_SIZE": "100"
+            }
         }
     ]
 }
